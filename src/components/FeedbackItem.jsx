@@ -1,8 +1,12 @@
 import {useState} from 'react';
 import Card from './shared/Card';
-import {FaTimes,FaHeart,FaRegHeart,FaThumbsUp} from 'react-icons/fa';
+import {FaTimes,FaHeart,FaRegHeart,FaThumbsUp,FaEdit} from 'react-icons/fa';
 import {motion,AnimatePresence} from 'framer-motion';
-function FeedbackItem({item,handleDelete}){
+import { useContext } from 'react';
+import FeedbackContext from './FeedbackContext';
+
+function FeedbackItem({item}){
+const {deleteFeedback,editFeedback}=useContext(FeedbackContext);
 const [toggleLike, setToggleLike] = useState(false);
 //const [countLike, setCountLike] = useState(0);
 // const handleLike = (id, oldCount) => {
@@ -13,8 +17,11 @@ const [toggleLike, setToggleLike] = useState(false);
         <>
         <Card>
             <div className='num-display'>{item.rating}</div>
-            <button onClick={()=>handleDelete(item.id)}className='close'>
+            <button onClick={()=>deleteFeedback(item.id)}className='close'>
                 <FaTimes color="purple"/>
+            </button>
+            <button className='edit' onClick={()=>editFeedback(item)}>
+                <FaEdit color="purple"/>
             </button>
             <div className='textdisplay'>{item.text}</div>
             <div className="like-btn">
